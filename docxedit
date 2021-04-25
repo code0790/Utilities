@@ -1,0 +1,22 @@
+#!/bin/bash
+
+DIRPATH=$(dirname $1)
+FILE=$(basename $1)
+
+cd $DIRPATH
+
+unzip -qq $FILE -d $DIRPATH/doc-file-content
+
+#edit commands i '' because mac is using bsd sed
+sed -i '' 's/Release/NewRelease/g' $DIRPATH/doc-file-content/word/document.xml
+sed -i '' 's/Feature/THe Feature/g' $DIRPATH/doc-file-content/word/document.xml
+
+
+NEWFILE="Copy${FILE}"
+cd doc-file-content
+zip -q -r ../$NEWFILE.docx *
+
+#remove dir
+#echo $(pwd)
+cd ..
+rm -r doc-file-content
